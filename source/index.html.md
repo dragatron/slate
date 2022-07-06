@@ -1,245 +1,187 @@
----
-title: API Reference
+--- 
 
-language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
+title: Ashwins-Auth 
 
-toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
+language_tabs: 
+   - HTTP 
 
-includes:
-  - errors
+toc_footers: 
+   - <a href='#'>Sign Up for a Developer Key</a> 
+   - <a href='https://github.com/lavkumarv'>Documentation Powered by lav</a> 
 
-search: true
+includes: 
+   - errors 
 
-code_clipboard: true
+search: true 
 
-meta:
-  - name: description
-    content: Documentation for the Kittn API
----
+--- 
 
-# Introduction
+# Introduction 
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+This is the API for every Auth functionality for Ashwins Pharmacy. There are three different unique flows :
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+**Login:** Login is the most basic functionality where it is used for Signup, Login & Forgot password flows. <br />
+**Groups:** Groups is the higher level functionality where once a pharmacist has logged in to the account , he can create groups, add users, delete users, set password etc <br />
+**Admin:** This provides all the admin functionalities
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
+**URL:**  https://api.dev.ashwins.com.au <br/>
 
-# Authentication
+**Version:** 0.1 
 
-> To authorize, use this code:
 
-```ruby
-require 'kittn'
+# User
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
+## Signup 
 
-```python
-import kittn
+> Sample Request object
 
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# Kittens
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
-
-```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+```json 
+{
+    "fullName" : "FirstName LastName",
+    "email" : "email@dragatron.com.au",
+    "password" : "testing1234" 
   }
-]
 ```
 
-This endpoint retrieves all kittens.
+**Description:** Signup of a new users. This method is from the user perspective. Whenever a new users wants to signup on the platform. Refer the url from top level description
 
-### HTTP Request
+### HTTP Request 
+`***POST*** /dev/user/signup` 
 
-`GET http://example.com/api/kittens`
+| field | Description |
+| ---- | ----------- |
+| fullName | full name |
+| email | email |
+| password | password |
 
-### Query Parameters
+**Responses**
 
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Invalid input |
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
 
-## Get a Specific Kitten
 
-```ruby
-require 'kittn'
+## login 
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
+> Sample Request object
 
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
+```json 
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+    "email" : "email@dragatron.com.au",
+    "password" : "testing1234" 
+  }
+```
+> Sample Response object
+
+```json 
+{
+    "message": "Success",
+    "token": "eyJraWQiOiJkclh2eE5sZ3NvMmVjRGt4QlVGTzh3b3lsemgzU25GT3VydzZhSkw0WTlnPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI1YWEyMDQ4ZS0xNzJkLTRhNmEtYmRmMS1hMGQwZGFmNDAxNmMiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTIuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTJfVUppbG11eGVZIiwiY2xpZW50X2lkIjoiNzR1bWxvNnVyM2k1YnAzZzI0NDdycDh0MXQiLCJvcmlnaW5fanRpIjoiN2I5ZmVjYjAtM2QwNC00YWMzLTg4ZDYtYTEwNzAwZTYxOGFkIiwiZXZlbnRfaWQiOiIxZDI2NjcxMi04NzZiLTQ0YWEtOTU2NC1kNWI2YWM2MjVhNzkiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNjU2NTY4MzUxLCJleHAiOjE2NTY1ODYzNTEsImlhdCI6MTY1NjU2ODM1MSwianRpIjoiZWFmYjBlZGUtZjM4Mi00N2Q4LThlZDUtZGExYTI3ZDQ1MDg1IiwidXNlcm5hbWUiOiJha2hpbEBkcmFnYXRyb24uY29tLmF1In0.DzKsnQSRAWMxj6RxiKiUCQQK71fCKi-69b9jOieqDzFd6y4OwkEbrJfBDmNRSMvBiTlwGfgdPSYOBbWeUtp2AredNDcupph9njpty3BGpU56yK2JOSb-6Y1msF81Kft3L2eWS-KwtIg88-BbE9wVKLeG3RNrYUGNpv3r4CgeUvZxx-6OADvjXfSpLpJLyqkCF1d23D5YDRLoVi0MY74wYV3rh_a6T_2dAuoYd0B9RR1w6v8FFzaTRg-nmpEIKYDc41hMuMpPEkpY08oYIBmW4dvSvT_8jkFj-q1uir1kSRimUco2FFgjl1WykM3vKuD_FTgg4eRNpXXofd_5n2eZgA"
 }
 ```
 
-This endpoint retrieves a specific kitten.
+**Description:** Login of a new users. This method is from the user perspective. Whenever a new users wants to login on the platform. Refer the url from top level description
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+### HTTP Request 
+`***POST*** /dev/user/login` 
 
-### HTTP Request
+| field | Description |
+| ---- | ----------- |
+| email | email |
+| password | password |
 
-`GET http://example.com/kittens/<ID>`
+**Responses**
 
-### URL Parameters
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Invalid input |
+| token | Returns a JWT token which can be used to check the validity of the session |
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
 
-## Delete a Specific Kitten
+## Forgot
 
-```ruby
-require 'kittn'
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
+> Sample Request object
 
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
+```json 
 {
-  "id": 2,
-  "deleted" : ":("
-}
+    "email" : "email@dragatron.com.au"
+  }
 ```
 
-This endpoint deletes a specific kitten.
+**Description:** Forgot Password Functionality. Takes it email address as an input and sends an email to the user with a link on clicking of that the user is directed to the password reset screen where user will add his password and re-enter the password 
 
-### HTTP Request
+### HTTP Request 
+`***POST*** /dev/user/forgot` 
 
-`DELETE http://example.com/kittens/<ID>`
+| field | Description |
+| ---- | ----------- |
+| email | email |
 
-### URL Parameters
+**Responses**
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
+| Code | Description |
+| ---- | ----------- |
+| 200 | Success |
+| 400 | Invalid input |
 
+# /DEV/USER/CONFIRMCODEPWD
+## ***POST*** 
+
+**Description:** Auto generated using Swagger Inspector
+
+### HTTP Request 
+`***POST*** /dev/user/confirmCodePwd` 
+
+**Responses**
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Auto generated using Swagger Inspector |
+
+# /DEV/GROUPS
+## ***GET*** 
+
+**Description:** Auto generated using Swagger Inspector
+
+### HTTP Request 
+`***GET*** /dev/groups` 
+
+**Responses**
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Auto generated using Swagger Inspector |
+
+# /DEV/GROUPS/USERS
+## ***POST*** 
+
+**Description:** Auto generated using Swagger Inspector
+
+### HTTP Request 
+`***POST*** /dev/groups/users` 
+
+**Responses**
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Auto generated using Swagger Inspector |
+
+# /DEV/USER/LOGIN
+## ***POST*** 
+
+**Description:** Auto generated using Swagger Inspector
+
+### HTTP Request 
+`***POST*** /dev/user/login` 
+
+**Responses**
+
+| Code | Description |
+| ---- | ----------- |
+| 200 | Auto generated using Swagger Inspector |
+
+<!-- Converted with the swagger-to-slate https://github.com/lavkumarv/swagger-to-slate -->
